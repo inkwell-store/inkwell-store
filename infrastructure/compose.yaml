@@ -1,0 +1,24 @@
+name: inkwell-store
+
+services:
+
+  front-end-client:
+    networks:
+      - inkwell
+      
+  api-gateway:
+    ports:
+      - "8080:8080"
+    networks:
+      - inkwell
+
+  authorization-service:
+    networks:
+      - inkwell
+
+  customer-service:
+    networks:
+      - inkwell
+
+networks:
+  inkwell: {}

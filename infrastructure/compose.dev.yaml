@@ -1,0 +1,66 @@
+services:
+
+  front-end-client:
+    image: node:26.7.0-bookworm-slim
+    ports:
+      - 4200:4200
+    working_dir: "/app"
+    command: "npx ng serve --host 0.0.0.0"
+    volumes:
+      - type: bind
+        source: ../services/front-end
+        target: /app
+        read_only: false
+
+  api-gateway:
+    image: "${JDK_IMAGE}"
+    working_dir: "/app"
+    command: ./mvnw spring-boot:run
+    volumes:
+      # mount the source code inside host to app inside the container
+      - type: bind
+        source: ../services/api-gateway-service
+        target: /app
+        read_only: false
+
+      # stores the maven dependencies on a persistent volume
+      - type: volume
+        source: global-maven-cache
+        target: /root/.m2
+
+  authorization-service:
+    image: "${JDK_IMAGE}"
+    working_dir: "/app"
+    command: ./mvnw spring-boot:run
+    volumes:
+      # mount the source code inside host to app inside the container
+      - type: bind
+        source: ../services/authorization-service
+        target: /app
+        read_only: false
+
+      # stores the maven dependencies on a persistent volume
+      - type: volume
+        source: global-maven-cache
+        target: /root/.m2
+
+  customer-service:
+    image: "${JDK_IMAGE}"
+    working_dir: "/app"
+    command: ./mvnw spring-boot:run
+    volumes:
+      # mount the source code inside host to app inside the container
+      - type: bind
+        source: ../services/customer-service
+        target: /app
+        read_only: false
+
+      # stores the maven dependencies on a persistent volume
+      - type: volume
+        source: global-maven-cache
+        target: /root/.m2  
+
+volumes:
+  # this allows me to reuse and share the dependencies for multiple services. mvnw should be able to
+  # fetch them from here if I declare the right path: /root/.m2 on my services'
+  global-maven-cache:

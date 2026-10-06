@@ -1,0 +1,9 @@
+services:
+
+  authorization-service:
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker-test"
+
+  customer-service:
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker-test"

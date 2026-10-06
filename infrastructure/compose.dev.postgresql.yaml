@@ -1,0 +1,40 @@
+services:
+
+  database: 
+    image: "${POSTGRESQL_IMAGE}"
+    environment:
+      # Superuser credentials. The database for it will have the name 'admin'
+      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: admin
+    
+    volumes:
+      # Provides a way for the database container to access the initialization script
+      # which creates the databases and sets up users and privileges.
+      - type: bind
+        source: ./database/init_script.sql
+        target: /docker-entrypoint-initdb.d/init_script.sql
+        read_only: true
+
+    networks:
+      - inkwell
+    
+  # Lightweight browser database manager 
+  adminer:
+    depends_on: 
+      - database
+    image: adminer:6.1.1
+    restart: always
+    ports:
+      - 8079:8080
+    networks:
+      - inkwell
+
+  api-gateway:
+    depends_on:
+      - database
+
+  authorization-service:
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker-dev"
+    depends_on:
+      - database
