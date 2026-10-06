@@ -1,5 +1,7 @@
 # ADR Template
-The following template was based on templates and other examples available [here](https://architecture-decision-record.github.io/) by [Joel Parker Henderson](https://github.com/joelparkerhenderson):
+The following template was based on templates and other examples available [here](https://architecture-decision-record.github.io/) by [Joel Parker Henderson](https://github.com/joelparkerhenderson).
+
+Copy the template below:
 
 # Title
 
