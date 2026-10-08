@@ -27,6 +27,7 @@ services:
       - type: volume
         source: global-maven-cache
         target: /root/.m2
+        read_only: false 
 
   authorization-service:
     image: "${JDK_IMAGE}"
@@ -43,6 +44,7 @@ services:
       - type: volume
         source: global-maven-cache
         target: /root/.m2
+        read_only: false
 
   customer-service:
     image: "${JDK_IMAGE}"
@@ -59,6 +61,30 @@ services:
       - type: volume
         source: global-maven-cache
         target: /root/.m2  
+        read_only: false
+
+  notification-service:
+    image: "${JDK_IMAGE}"
+    working_dir: "/app"
+    command: ./mvnw spring-boot:run
+    volumes:
+      # mount the source code inside host to app inside the container
+      - type: bind
+        source: ../services/notification-service
+        target: /app
+        read_only: false
+
+      # mount an easy-to-access folder to dump the emails 
+      - type: bind
+        source: ../email-dump
+        target: /app/email-dump
+        read_only: false
+
+      # stores the maven dependencies on a persistent volume
+      - type: volume
+        source: global-maven-cache
+        target: /root/.m2
+        read_only: false 
 
 volumes:
   # this allows me to reuse and share the dependencies for multiple services. mvnw should be able to

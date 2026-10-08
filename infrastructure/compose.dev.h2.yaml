@@ -7,3 +7,7 @@ services:
   customer-service:
     environment:
       - "SPRING_PROFILES_ACTIVE=docker-test"
+
+  notification-service:
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker-test"

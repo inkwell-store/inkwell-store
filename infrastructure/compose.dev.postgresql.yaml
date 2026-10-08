@@ -29,11 +29,19 @@ services:
     networks:
       - inkwell
 
-  api-gateway:
+  authorization-service:
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker-dev"
     depends_on:
       - database
 
-  authorization-service:
+  customer-service:
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker-dev"
+    depends_on:
+      - database
+
+  notification-service:
     environment:
       - "SPRING_PROFILES_ACTIVE=docker-dev"
     depends_on:

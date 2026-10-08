@@ -1,2 +1,3 @@
 # Location for each services' source code
-services/*
+services
+email-dump

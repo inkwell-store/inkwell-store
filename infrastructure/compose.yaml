@@ -20,5 +20,17 @@ services:
     networks:
       - inkwell
 
+  rabbitmq-service:
+    image: rabbitmq:4.3.6-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - inkwell
+
+  notification-service:
+    networks:
+      - inkwell
+
 networks:
   inkwell: {}
