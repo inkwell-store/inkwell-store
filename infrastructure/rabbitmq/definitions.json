@@ -1,0 +1,73 @@
+{
+    "vhosts": [
+        {
+            "name": "/"
+        },
+        {
+            "name": "development_vhost"
+        }
+    ],
+    "users": [
+        {
+            "name": "admin",
+            "password": "admin",
+            "tags": "administrator"
+        }
+    ],
+    "permissions": [
+        {
+            "user": "admin",
+            "vhost": "development_vhost",
+            "configure": ".*",
+            "write": ".*",
+            "read": ".*"
+        }
+    ],
+    "parameters": [],
+    "policies": [],
+    "exchanges": [
+        {
+            "name": "credential.exchange",
+            "vhost": "development_vhost",
+            "type": "fanout",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        }
+    ],
+    "queues": [
+        {
+            "name": "customer.credential.queue",
+            "vhost": "development_vhost",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "notification.credential.queue",
+            "vhost": "development_vhost",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        }
+    ],
+    "bindings": [
+        {
+            "source": "credential.exchange",
+            "vhost": "development_vhost",
+            "destination": "customer.credential.queue",
+            "destination_type": "queue",
+            "routing_key": "",
+            "arguments": {}
+        },
+        {
+            "source": "credential.exchange",
+            "vhost": "development_vhost",
+            "destination": "notification.credential.queue",
+            "destination_type": "queue",
+            "routing_key": "",
+            "arguments": {}
+        }
+    ]
+}
