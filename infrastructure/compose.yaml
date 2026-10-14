@@ -25,6 +25,19 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+
+    # Setup the topology's definitions from the infrastructure folder
+    volumes:
+      - type: bind
+        source: ./rabbitmq/rabbitmq.conf
+        target: /etc/rabbitmq/rabbitmq.conf
+        read_only: true
+      
+      - type: bind
+        source: ./rabbitmq/definitions.json
+        target: /etc/rabbitmq/definitions.json
+        read_only: true
+    
     networks:
       - inkwell
 
