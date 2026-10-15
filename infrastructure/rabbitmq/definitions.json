@@ -12,15 +12,44 @@
             "name": "admin",
             "password": "admin",
             "tags": "administrator"
+        },
+        {
+            "name": "authorization-service",
+            "password": "authorization-service",
+            "tags": "management"
+        },
+        {
+            "name": "customer-service",
+            "password": "customer-service",
+            "tags": "management"
+        },
+        {
+            "name": "notification-service",
+            "password": "notification-service",
+            "tags": "management"
         }
     ],
     "permissions": [
         {
-            "user": "admin",
+            "user": "authorization-service",
             "vhost": "development_vhost",
-            "configure": ".*",
-            "write": ".*",
-            "read": ".*"
+            "configure": "",
+            "write": "^credential\\.exchange$",
+            "read": ""
+        },
+        {
+            "user": "customer-service",
+            "vhost": "development_vhost",
+            "configure": "",
+            "write": "",
+            "read": "^customer\\.credential\\.queue$"
+        },
+        {
+            "user": "notification-service",
+            "vhost": "development_vhost",
+            "configure": "",
+            "write": "",
+            "read": "^notification\\.credential\\.queue$"
         }
     ],
     "parameters": [],
